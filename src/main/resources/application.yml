@@ -8,6 +8,3 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
-server:
-  servlet:
-    context-path: /samplebbs
