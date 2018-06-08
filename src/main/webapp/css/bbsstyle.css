@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+.error{
+	color:#ff0000;
+	font-size:15px;
+	font-weight:bold;
+}

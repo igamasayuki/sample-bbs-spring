@@ -1,0 +1,7 @@
+・パフォーマンスの講義で再度使用
+　・sqlフォルダの1createtable.txtと2insert.txtを実行
+　・joinedとseparetedの速度の違いを確認する
+　・INDEXの説明をする
+　・INDEXを貼っていない状態であいまい検索をしてみる「テスト」で検索
+　・3createindex.txtを実行し、INDEXを貼る
+　・あいまい検索を再度してみて若干速度が上がることを確認する

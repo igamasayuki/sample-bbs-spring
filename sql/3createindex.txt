@@ -1,0 +1,5 @@
+--投稿者カラムにindexを作成(text_pattern_opsを付けないと前方一致検索でindexが使用されません)
+CREATE INDEX index_name ON articles(name text_pattern_ops);
+
+--indexを削除
+--DROP INDEX index_name;
