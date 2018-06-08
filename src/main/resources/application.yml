@@ -10,4 +10,4 @@ spring:
       suffix: .jsp
 server:
   servlet:
-    context-path: servlet
+    context-path: /samplebbs
