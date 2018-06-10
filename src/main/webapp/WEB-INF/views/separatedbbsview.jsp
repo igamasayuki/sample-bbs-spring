@@ -10,6 +10,7 @@
 	</head>
 	<body>
 		<h3>掲示板アプリケーション</h3>
+		記事件数　　　：<c:out value="${listSize}"/>件<br>
 		データ取得時間：<c:out value="${lapTime}"/>ミリ秒<br>
 		<form:form modelAttribute="separatedArticleForm" action="${pageContext.request.contextPath}/separatedbbs/postarticle">
 			<form:errors path="name" cssClass="error" element="div"/>
@@ -18,20 +19,6 @@
 			投稿内容：<form:textarea path="content" rows="5" cols="25"/><br>
 			<input type="submit" value="記事投稿">
 		</form:form>
-		<br>
-		<c:if test="${searchFlag}">
-			<form:form action="${pageContext.request.contextPath}/separatedbbs">
-				<input type="submit" value="全件表示">
-			</form:form>
-		</c:if>
-		<c:if test="${!searchFlag}">
-			<form:form modelAttribute="separatedArticleForm" action="${pageContext.request.contextPath}/separatedbbs/search">
-				<form:errors path="name" cssClass="error" element="div"/>
-				投稿者名(前方一致)：<form:input path="name"/><br>
-				<form:errors path="content" cssClass="error" element="div"/>
-				<input type="submit" value="検索">
-			</form:form>
-		</c:if>
 		<hr>
 		<c:forEach var="article" items="${articleList}">
 			投稿者名：<c:out value="${article.name}"/><br>

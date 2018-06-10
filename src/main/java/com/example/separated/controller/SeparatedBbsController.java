@@ -68,17 +68,25 @@ public class SeparatedBbsController {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
 		List<SeparatedArticle> articleList = articleService.findAll();
+		
+		// 記事サイズをスコープに格納する
+		model.addAttribute("listSize", articleList.size());
+		
 		for (SeparatedArticle article : articleList) {
 			List<SeparatedComment> commentList = commentService.findByArticleId(article.getId());
 			article.setCommentList(commentList);
 		}
 		
+		// 件数が多いと表示は時間がかかるので最初の10個のみスコープへ格納する
+		if(articleList.size() >= 10) {
+			articleList = articleList.subList(0, 10);
+		}
+		// 記事リストをスコープに格納する
+		model.addAttribute("articleList", articleList);
+		
 		// 計測開始からここまでの時間の差分を取得しスコープへ格納
 		Long lapTime = ChronoUnit.MILLIS.between(time, LocalDateTime.now());
-		model.addAttribute("articleList", articleList);
 		model.addAttribute("lapTime", lapTime);
-		// 検索エリアを表示させるフラグ
-		model.addAttribute("searchFlag", false);
 
 		return "separatedbbsview";
 	}
@@ -133,34 +141,5 @@ public class SeparatedBbsController {
 		articleService.delete(id);
 
 		return "redirect:/separatedbbs";
-	}
-	
-	/**
-	 * 投稿者名で前方一致検索をします.
-	 * 
-	 * @param name 投稿者名
-	 * @param model モデル
-	 * @return 検索結果の表示
-	 */
-	@RequestMapping(value = "/search")
-	public String searchByName(@RequestParam String name, Model model) {
-		if (name.isEmpty()) {
-			return "redirect:/separatedbbs";
-		}
-		//計測スタート
-		LocalDateTime time = LocalDateTime.now();
-		List<SeparatedArticle> articleList = articleService.findByUserName(name);
-		for (SeparatedArticle article : articleList) {
-			List<SeparatedComment> commentList = commentService.findByArticleId(article.getId());
-			article.setCommentList(commentList);
-		}
-		model.addAttribute("articleList", articleList);
-		
-		// 計測開始からここまでの時間の差分を取得しスコープへ格納
-		Long lapTime = ChronoUnit.MILLIS.between(time, LocalDateTime.now());
-		model.addAttribute("lapTime", lapTime);
-		// 全件表示ボタンを表示させるフラグ
-		model.addAttribute("searchFlag", true);
-		return "separatedbbsview";
 	}
 }

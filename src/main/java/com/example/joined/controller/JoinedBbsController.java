@@ -68,13 +68,22 @@ public class JoinedBbsController {
 	public String form(Model model) {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
+		
 		List<JoinedArticle> articleList = articleService.findAll();
+		
+		// 記事サイズをスコープに格納する
+		model.addAttribute("listSize", articleList.size());
+		// 件数が多いと表示は時間がかかるので最初の10個のみスコープへ格納する
+		if(articleList.size() >= 10) {
+			articleList = articleList.subList(0, 10);
+		}
+		// 記事リストをスコープに格納する
 		model.addAttribute("articleList", articleList);
 
 		// 計測開始からここまでの時間の差分を取得しスコープへ格納
 		Long lapTime = ChronoUnit.MILLIS.between(time, LocalDateTime.now());
 		model.addAttribute("lapTime", lapTime);
-		model.addAttribute("searchFlag", false);
+		
 		return "joinedbbsview";
 	}
 
@@ -137,27 +146,4 @@ public class JoinedBbsController {
 		return "redirect:/joinedbbs";
 	}
 	
-	/**
-	 * 投稿者名で前方一致検索をします.
-	 * 
-	 * @param name 投稿者名
-	 * @param model モデル
-	 * @return 検索結果の表示
-	 */
-	@RequestMapping(value = "/search")
-	public String searchByName(@RequestParam String name, Model model) {
-		if (name.isEmpty()) {
-			return "redirect:/joinedbbs";
-		}
-		//計測スタート
-		LocalDateTime time = LocalDateTime.now();
-		List<JoinedArticle> articleList = articleService.findByUserName(name);
-		model.addAttribute("articleList", articleList);
-		
-		// 計測開始からここまでの時間の差分を取得しスコープへ格納
-		Long lapTime = ChronoUnit.MILLIS.between(time, LocalDateTime.now());
-		model.addAttribute("lapTime", lapTime);
-		model.addAttribute("searchFlag", true);
-		return "joinedbbsview";
-	}
 }

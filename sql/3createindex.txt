@@ -1,5 +1,5 @@
---投稿者カラムにindexを作成(text_pattern_opsを付けないと前方一致検索でindexが使用されません)
-CREATE INDEX index_name ON articles(name text_pattern_ops);
+--コメントテーブルのarticle_idにindexを張るSQL
+CREATE INDEX comments_article_id_index ON comments(article_id);
 
---indexを削除
---DROP INDEX index_name;
+--indexを削除するSQL
+--DROP INDEX comments_article_id_index;
