@@ -34,12 +34,12 @@
 			</c:forEach>
 			<form:form modelAttribute="separatedCommentForm" action="${pageContext.request.contextPath}/separatedbbs/postcomment">
 				<input type="hidden" name="articleId" value="<c:out value="${article.id}"/>">
-				<c:if test="${article.id == commentForm.articleId}">
+				<c:if test="${article.id == separatedCommentForm.articleId}">
 					<form:errors path="name" cssClass="error" element="div"/>
 				</c:if>
 				名前:<br>
 				<form:input path="name"/><br>
-				<c:if test="${article.id == commentForm.articleId}">
+				<c:if test="${article.id == separatedCommentForm.articleId}">
 					<form:errors path="content" cssClass="error" element="div"/>
 				</c:if>
 				コメント:<br>
